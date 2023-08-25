@@ -53,6 +53,11 @@ def GetURLsFromDork(dork):
                 page = 6
                 break
 
+            if "google" in r.text:
+                # Ignore the result with google in it
+                print(colors.red + "[!] Ignoring google links!" + colors.reset)
+                continue
+
             urls = re.findall(r"(https:\/\/[a-zA-Z0-9_\-\.\/\?&=]+)", r.text)
             for url in urls:
                 if url not in results:
@@ -60,7 +65,9 @@ def GetURLsFromDork(dork):
                     results.append(url)
 
         except KeyboardInterrupt:
-            continue
+            # Stop the scan, this function is called from another function which is in a while loop
+            print(colors.red + "[!] Stopping scan..." + colors.reset)
+            break
 
         except Exception as e:
             break
@@ -92,7 +99,7 @@ def start():
     print("")
     print(colors.yellow + "Made by GitHub: iuseyahoo, discord: altorx" + colors.reset)
     # version
-    print(colors.yellow + "Version: 1.0.0" + colors.reset)
+    print(colors.yellow + "Version: 1.0.4" + colors.reset)
 
     while True:
         print("\n[1] - Manual URL entry     [2] - Gather URLs from dork     [3] - Exit")
@@ -165,6 +172,11 @@ def start():
                 for dork in dorklist:
                     print(colors.blue + "[*] Gathering URLs from dork: " + colors.reset + dork)
                     urls = GetURLsFromDork(dork)
+                    
+                    if len(urls) == 0:
+                        print(colors.red + "[!] Stopping scan..." + colors.reset)
+                        break
+
                     for url in urls:
                         if url not in dorksitesfound:
                             print(colors.blue + "[*] Found URL: " + colors.reset + url)

@@ -13,7 +13,7 @@ python main.py
 ```
 
 ## Note
-Creadits to [Altorx](https://github.com/iUseYahoo).
+Credits to [Altorx](https://github.com/iUseYahoo).
 
 ## License
 MIT © CSPI
